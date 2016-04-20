@@ -20,7 +20,7 @@ import processing.core.PApplet;
 /** EarthquakeCityMap
  * An application with an interactive map displaying earthquake data.
  * Author: UC San Diego Intermediate Software Development MOOC team
- * @author Your name here
+ * @author Cheng Gu
  * Date: July 17, 2015
  * */
 public class EarthquakeCityMap extends PApplet {
@@ -165,6 +165,11 @@ public class EarthquakeCityMap extends PApplet {
 		// IMPLEMENT THIS: loop over all countries to check if location is in any of them
 		
 		// TODO: Implement this method using the helper method isInCountry
+		for (Marker country: countryMarkers){
+			if (isInCountry(earthquake, country)){
+				return true;
+			}
+		}
 		
 		// not inside any country
 		return false;
@@ -179,6 +184,35 @@ public class EarthquakeCityMap extends PApplet {
 	private void printQuakes() 
 	{
 		// TODO: Implement this method
+		int sum_ocean = 0;
+		for(Marker country: countryMarkers){
+			int i=0;
+			String c = country.getProperty("name").toString();
+			//System.out.println(c);
+			for(Marker quake: quakeMarkers){
+				
+				if(quake instanceof LandQuakeMarker){
+					//System.out.println(quake.getProperty("country"));
+					String q = quake.getProperty("country").toString();
+					
+					if(q.equals(c)){
+						//System.out.println(q);
+						i++;
+					}
+				}
+			}
+			if(i>0){
+			System.out.println(country.getProperty("name").toString() + ": " + i);
+			}
+		}
+		
+		for(Marker quake: quakeMarkers){
+			if(quake instanceof OceanQuakeMarker){
+				sum_ocean++;
+			}
+		}
+		System.out.println("OCEAN QUAKES: " + sum_ocean);
+		
 	}
 	
 	
